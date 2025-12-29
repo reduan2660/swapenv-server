@@ -1,0 +1,21 @@
+meta {
+  name: 2. Poll
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/auth/poll/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "device_code": "2adaecf97e1cd10f7d78913e3c0bed113b7768f4"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

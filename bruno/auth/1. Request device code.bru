@@ -1,0 +1,15 @@
+meta {
+  name: 1. Request device code
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/auth/device/
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

@@ -15,8 +15,9 @@ type Organization struct {
 
 type User struct {
 	ID        uuid.UUID `gorm:"type:uuid;primaryKey;default:gen_random_uuid()"`
-	Email     *string   `gorm:"uniqueIndex"`
-	GithubID  string    `gorm:"uniqueIndex"`
+	Name      *string
+	Email     *string `gorm:"uniqueIndex"`
+	GithubID  string  `gorm:"uniqueIndex"`
 	OrgID     uuid.UUID
 	Org       Organization `gorm:"foreignKey:OrgID"`
 	Role      string       `gorm:"default:'admin'"`
