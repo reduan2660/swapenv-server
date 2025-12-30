@@ -14,18 +14,21 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func GenerateToken(userID, orgID uuid.UUID, secret string) (string, error) {
+func GenerateToken(userID, orgID uuid.UUID, secret string) (string, int64, error) {
+
+	expiresAt := time.Now().Add(7 * 24 * time.Hour)
 	claims := Claims{
 		UserID: userID,
 		OrgID:  orgID,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(7 * 24 * time.Hour)),
+			ExpiresAt: jwt.NewNumericDate(expiresAt),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(secret))
+	signed, err := token.SignedString([]byte(secret))
+	return signed, expiresAt.Unix(), err
 }
 
 func ValidateToken(tokenString, secret string) (*Claims, error) {

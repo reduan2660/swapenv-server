@@ -66,15 +66,16 @@ func (h *AuthHandler) Poll(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to create user"})
 	}
 
-	token, err := auth.GenerateToken(user.ID, user.OrgID, h.JWTSecret)
+	token, expires_at, err := auth.GenerateToken(user.ID, user.OrgID, h.JWTSecret)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "failed to generate token"})
 	}
 
 	return c.JSON(http.StatusOK, map[string]any{
-		"token":   token,
-		"user_id": user.ID,
-		"org_id":  user.OrgID,
+		"token":      token,
+		"user_id":    user.ID,
+		"org_id":     user.OrgID,
+		"expires_at": expires_at,
 	})
 }
 
