@@ -1,3 +1,4 @@
 .env
 swapenv-server
 tmp/
+data/
